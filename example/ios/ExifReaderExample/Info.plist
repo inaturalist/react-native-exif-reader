@@ -53,5 +53,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+ 	<string>${PRODUCT_NAME} uses the camera to add photos to your observations of nature.</string>
+  <key>NSPhotoLibraryAddUsageDescription</key>
+  <string>Export and import ${PRODUCT_NAME} photos to and from your library.</string>
 </dict>
 </plist>

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@react-native-camera-roll/camera-roll": "^5.0.4",
+    "react-native-vision-camera": "^2.15.2",
     "react": "18.1.0",
     "react-native": "0.70.4",
     "react-native-permissions": "^3.6.1"

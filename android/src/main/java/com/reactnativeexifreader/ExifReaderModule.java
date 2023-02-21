@@ -1,5 +1,6 @@
 package com.reactnativeexifreader;
-
+import java.util.Map;
+import com.facebook.react.bridge.ReadableMap;
 import androidx.annotation.NonNull;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -27,6 +28,9 @@ import android.content.Context;
 import android.net.Uri;
 import java.util.Locale;
 import java.text.DateFormat;
+import java.io.FileDescriptor;
+import androidx.exifinterface.media.ExifInterface;
+import android.location.Location;
 
 @ReactModule(name = ExifReaderModule.NAME)
 public class ExifReaderModule extends ReactContextBaseJavaModule {
@@ -43,6 +47,32 @@ public class ExifReaderModule extends ReactContextBaseJavaModule {
     @NonNull
     public String getName() {
         return NAME;
+    }
+
+    @ReactMethod
+    public void writeExif(String uri, ReadableMap exifData, Promise promise) {
+        WritableMap params = Arguments.createMap();
+        Log.d(NAME, "writeExif: " + uri);
+
+        try {
+            Uri photoUri = Uri.parse(uri);
+            FileDescriptor is = mContext.getContentResolver().openFileDescriptor(photoUri, "rw", null).getFileDescriptor();
+            ExifInterface exif = new ExifInterface(is);
+
+            if (exifData.hasKey("latitude") && exifData.hasKey("longitude")) {
+              double latitude = exifData.getDouble("latitude");
+              double longitude = exifData.getDouble("longitude");
+
+              Location location = new Location("");
+              location.setLatitude(latitude);
+              location.setLongitude(longitude);
+              exif.setGpsInfo(location);
+            }
+
+            exif.saveAttributes();
+        } catch (Exception e) {
+            Log.e(NAME, "Exception", e);
+        }
     }
 
     @ReactMethod

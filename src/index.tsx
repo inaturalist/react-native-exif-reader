@@ -17,6 +17,11 @@ const ExifReader = NativeModules.ExifReader
       }
     );
 
-export function readExif(uri: string): Promise<number> {
+export function readExif(uri: string): Promise<Record<string, any>> {
   return ExifReader.readExif(uri);
+}
+
+
+export function writeExif(uri: string, exifData: Record<string, any> ): Promise<Boolean> {
+  return ExifReader.writeExif(uri, exifData);
 }

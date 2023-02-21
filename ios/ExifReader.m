@@ -1,4 +1,5 @@
 #import <React/RCTBridgeModule.h>
+#import <React/RCTLog.h>
 
 @interface RCT_EXTERN_MODULE(ExifReader, NSObject)
 
@@ -10,5 +11,11 @@ RCT_EXTERN_METHOD(readExif:(NSString*)uri
 {
   return NO;
 }
+
+RCT_EXTERN_METHOD(writeExif:(NSString*)uri
+                 withExifData:(NSDictionary*)exifData
+                 withResolver:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject)
+
 
 @end
