@@ -181,7 +181,28 @@ class ExifReader: NSObject {
                         // When rendering is done, commit the edit to the Photos library.
                         PHPhotoLibrary.shared().performChanges({
                             let request = PHAssetChangeRequest(for: asset)
-                            request.location = CLLocation(latitude: (exifData["latitude"] as! Double), longitude: (exifData["longitude"] as! Double))
+                            
+                            
+                            let location:CLLocation;
+                            
+                            if (exifData.index(forKey: "positional_accuracy") != nil) {
+                                // Also save positional accuracy
+                                location = CLLocation(
+                                    coordinate: CLLocationCoordinate2D(
+                                        latitude: (exifData["latitude"] as! Double),
+                                        longitude: (exifData["longitude"] as! Double)),
+                                    altitude: -1,
+                                    horizontalAccuracy: (exifData["positional_accuracy"] as! Double),
+                                    verticalAccuracy: -1,
+                                    timestamp: Date.init())
+                            } else {
+                                // Just lat/lng
+                                location = CLLocation(
+                                    latitude: (exifData["latitude"] as! Double),
+                                    longitude: (exifData["longitude"] as! Double))
+                            }
+                            
+                            request.location = location
                         }, completionHandler: { success, error in
                             if !success {
                                 reject("Error", "Can't edit asset", error)

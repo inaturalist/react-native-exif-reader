@@ -66,7 +66,13 @@ public class ExifReaderModule extends ReactContextBaseJavaModule {
               Location location = new Location("");
               location.setLatitude(latitude);
               location.setLongitude(longitude);
+
               exif.setGpsInfo(location);
+
+              if (exifData.hasKey("positional_accuracy")) {
+                // Also save positional accuracy
+                exif.setAttribute(ExifInterface.TAG_GPS_H_POSITIONING_ERROR, String.valueOf(exifData.getDouble("positional_accuracy")));
+              }
             }
 
             exif.saveAttributes();

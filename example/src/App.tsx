@@ -33,7 +33,7 @@ export default function App() {
   const setPhotoExif = async () => {
     const cameraPhoto = await camera.current.takePhoto( { flash: "off" } );
     const imageUri = await CameraRoll.save(cameraPhoto.path, { type: 'photo', album: 'Camera' });
-    await writeExif(imageUri, { latitude: 37.773972, longitude: -122.431297 });
+    await writeExif(imageUri, { latitude: 37.773972, longitude: -122.431297, positional_accuracy: 66.0 });
   };
 
   const showImages = async () => {
