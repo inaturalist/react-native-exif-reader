@@ -99,11 +99,22 @@ class ExifReader: NSObject {
         }
     }
     
+    func readRawDataOfFile(uri: String, completion:@escaping (PHAsset?, Data?)->()) {
+        if uri.starts(with: "ph://") {
+            // PH Asset
+            return readRawPHAssetData(uri: uri, completion: completion)
+        } else {
+            // Local file
+            let data = try? Data(contentsOf: URL(fileURLWithPath: uri))
+            completion(nil, data)
+        }
+    }
+    
     
     // Reads the raw image data of a PHAsset
     func readRawPHAssetData(uri: String, completion:@escaping (PHAsset, Data)->()) {
         // We receive a PHAsset URL
-
+        
         // Retrieve local asset ID from full URL we receive from library (prefixed with "ph://")
         let assetLocalId = String(uri[uri.index(uri.startIndex, offsetBy: 5)...])
 
@@ -220,9 +231,13 @@ class ExifReader: NSObject {
     @objc(readExif:withResolver:withRejecter:)
     func readExif(uri: String, resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
         var response:Dictionary<String, Any>?
-        
-        readRawPHAssetData(uri: uri) { (asset, data) in
-            response = self.parseExif(data: data)
+                
+        readRawDataOfFile(uri: uri) { (asset, data) in
+            if let unwrappedData = data {
+                response = self.parseExif(data: unwrappedData)
+            } else {
+                response = nil
+            }
         }
         
         if (response != nil) {
