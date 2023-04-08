@@ -104,9 +104,16 @@ class ExifReader: NSObject {
             // PH Asset
             return readRawPHAssetData(uri: uri, completion: completion)
         } else {
-            // Local file
-            let data = try? Data(contentsOf: URL(fileURLWithPath: uri))
-            completion(nil, data)
+            // Local file URI
+            do {
+                if let fileUri = URL(string: uri) {
+                    let data = try Data(contentsOf: fileUri)
+                    completion(nil, data)
+                }
+            } catch let error {
+                print(error.localizedDescription)
+                print(error)
+            }
         }
     }
     
