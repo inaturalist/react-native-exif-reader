@@ -10,7 +10,7 @@ import {
   Image,
   TouchableOpacity, PermissionsAndroid,
 } from 'react-native';
-import { readExif, writeExif } from 'react-native-exif-reader';
+import { readExif, writeExif, writeLocation } from 'react-native-exif-reader';
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
@@ -26,15 +26,27 @@ export default function App() {
 
   const importPhoto = async (photo) => {
     const imageUri = photo.image.uri;
+    console.log('AAA imageUri', imageUri);
+
     const exif = await readExif(imageUri);
     setResult(exif);
+  };
+
+  const setPhotoLocation = async () => {
+    const cameraPhoto = await camera.current.takePhoto( { flash: "off" } );
+    const imageUri = await CameraRoll.save(cameraPhoto.path, { type: 'photo', album: 'Camera' });
+    await writeLocation(imageUri, { latitude: 37.773972, longitude: -122.431297 });
   };
 
   const setPhotoExif = async () => {
     const cameraPhoto = await camera.current.takePhoto( { flash: "off" } );
     const imageUri = await CameraRoll.save(cameraPhoto.path, { type: 'photo', album: 'Camera' });
-    await writeExif(imageUri, { latitude: 37.773972, longitude: -122.431297, positional_accuracy: 66.0 });
+    // iOS has their own set of limited EXIF tags - see here: https://developer.apple.com/documentation/imageio/exif_dictionary_keys?language=objc
+    const newExif = Platform.OS === 'ios' ? { "LensModel": "some lens model"} : { "Copyright": "some copyright" };
+    const response = await writeExif(imageUri, newExif);
+    console.log('writeExif Response', response);
   };
+
 
   const showImages = async () => {
     const permission =
@@ -77,11 +89,12 @@ export default function App() {
           <Text>Positional Accuracy: {result.positional_accuracy}</Text>
         </View>
       )}
-      <Button title="Take photo and set location EXIF" onPress={setPhotoExif} style={{ zIndex: 9999 }} />
+      <Button title="Take photo and set location EXIF" onPress={setPhotoLocation} style={{ zIndex: 9999 }} />
+      <Button title="Take photo and set raw EXIF" onPress={setPhotoExif} style={{ zIndex: 9999 }} />
       <Button title="Show Photos" onPress={showImages} style={{ zIndex: 9999 }} />
       {device && <Camera
         ref={camera}
-        style={[StyleSheet.absoluteFill, { top: 100 }]}
+        style={[StyleSheet.absoluteFill, { top: 140 }]}
         device={device}
         isActive={true}
         photo

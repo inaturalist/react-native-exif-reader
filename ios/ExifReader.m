@@ -17,5 +17,10 @@ RCT_EXTERN_METHOD(writeExif:(NSString*)uri
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
 
+RCT_EXTERN_METHOD(writeLocation:(NSString*)uri
+                 withLocation:(NSDictionary*)location
+                 withResolver:(RCTPromiseResolveBlock)resolve
+                 withRejecter:(RCTPromiseRejectBlock)reject)
+
 
 @end

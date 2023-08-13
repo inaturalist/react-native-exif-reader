@@ -1,6 +1,7 @@
 package com.reactnativeexifreader;
 import java.util.Map;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import androidx.annotation.NonNull;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -50,6 +51,38 @@ public class ExifReaderModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
+    public void writeLocation(String uri, ReadableMap location, Promise promise) {
+        WritableMap params = Arguments.createMap();
+        Log.d(NAME, "writeLocation: " + uri);
+
+        try {
+            Uri photoUri = Uri.parse(uri);
+            FileDescriptor is = mContext.getContentResolver().openFileDescriptor(photoUri, "rw", null).getFileDescriptor();
+            ExifInterface exif = new ExifInterface(is);
+
+            if (location.hasKey("latitude") && location.hasKey("longitude")) {
+              double latitude = location.getDouble("latitude");
+              double longitude = location.getDouble("longitude");
+
+              Location locationData = new Location("");
+              locationData.setLatitude(latitude);
+              locationData.setLongitude(longitude);
+
+              exif.setGpsInfo(locationData);
+
+              if (location.hasKey("positional_accuracy")) {
+                // Also save positional accuracy
+                exif.setAttribute(ExifInterface.TAG_GPS_H_POSITIONING_ERROR, String.valueOf(location.getDouble("positional_accuracy")));
+              }
+            }
+
+            exif.saveAttributes();
+        } catch (Exception e) {
+            Log.e(NAME, "Exception", e);
+        }
+    }
+
+    @ReactMethod
     public void writeExif(String uri, ReadableMap exifData, Promise promise) {
         WritableMap params = Arguments.createMap();
         Log.d(NAME, "writeExif: " + uri);
@@ -59,23 +92,34 @@ public class ExifReaderModule extends ReactContextBaseJavaModule {
             FileDescriptor is = mContext.getContentResolver().openFileDescriptor(photoUri, "rw", null).getFileDescriptor();
             ExifInterface exif = new ExifInterface(is);
 
-            if (exifData.hasKey("latitude") && exifData.hasKey("longitude")) {
-              double latitude = exifData.getDouble("latitude");
-              double longitude = exifData.getDouble("longitude");
+            // Save custom EXIF tags
+            ReadableMapKeySetIterator iterator = exifData.keySetIterator();
+            while (iterator.hasNextKey()) {
+              String key = iterator.nextKey();
+              Object value;
 
-              Location location = new Location("");
-              location.setLatitude(latitude);
-              location.setLongitude(longitude);
-
-              exif.setGpsInfo(location);
-
-              if (exifData.hasKey("positional_accuracy")) {
-                // Also save positional accuracy
-                exif.setAttribute(ExifInterface.TAG_GPS_H_POSITIONING_ERROR, String.valueOf(exifData.getDouble("positional_accuracy")));
+              switch (exifData.getType(key)) {
+                case Boolean:
+                  value = exifData.getBoolean(key);
+                  break;
+                case Number:
+                  value = exifData.getDouble(key);
+                  break;
+                case String:
+                  value = exifData.getString(key);
+                  break;
+                default:
+                  Log.e(NAME, "Unsupported EXIF tag value type (must be number/boolean/string): " + key);
+                  continue;
               }
+
+              exif.setAttribute(key, String.valueOf(value));
             }
 
             exif.saveAttributes();
+
+            // In case of Android, we return the exact same input URI
+            promise.resolve(uri);
         } catch (Exception e) {
             Log.e(NAME, "Exception", e);
         }

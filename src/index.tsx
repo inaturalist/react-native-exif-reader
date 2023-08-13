@@ -22,6 +22,10 @@ export function readExif(uri: string): Promise<Record<string, any>> {
 }
 
 
-export function writeExif(uri: string, exifData: Record<string, any> ): Promise<Boolean> {
+export function writeExif(uri: string, exifData: Record<string, any> ): Promise<string> {
   return ExifReader.writeExif(uri, exifData);
+}
+
+export function writeLocation(uri: string, location: Record<string, any> ): Promise<Boolean> {
+  return ExifReader.writeLocation(uri, location);
 }
