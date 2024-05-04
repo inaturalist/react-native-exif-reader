@@ -77,6 +77,7 @@ public class ExifReaderModule extends ReactContextBaseJavaModule {
             }
 
             exif.saveAttributes();
+            promise.resolve(true);
         } catch (Exception e) {
             Log.e(NAME, "Exception", e);
         }

@@ -159,10 +159,81 @@ class ExifReader: NSObject {
     @objc(writeLocation:withLocation:withResolver:withRejecter:)
     func writeLocation(uri: String, location: Dictionary<String, Any>, resolve:@escaping
         RCTPromiseResolveBlock,reject:@escaping RCTPromiseRejectBlock) -> Void {
+        if uri.starts(with: "ph://") {
+            writeLocationForPHAsset(uri: uri, location: location, resolve: resolve, reject: reject)
+        } else {
+            writeLocationForUri(uri: uri, location: location, resolve: resolve, reject: reject)
+        }
+    }
+
+    func writeLocationForUri(uri: String, location: Dictionary<String, Any>, resolve:@escaping
+        RCTPromiseResolveBlock,reject:@escaping RCTPromiseRejectBlock) -> Void {
+          var finalUri = uri
+          if uri.starts(with: "/") {
+            finalUri = "file://\(uri)"
+          }
+          guard let url = CFURLCreateWithString(nil, finalUri as CFString, nil) else {
+              reject("Error", "Can't create URL", nil)
+              return
+          }
+
+          guard let cgImageSource = CGImageSourceCreateWithURL(url as CFURL, nil) else {
+              reject("Error", "Can't create URL", nil)
+              return
+          }
+
+          let metadataDict = CGImageSourceCopyPropertiesAtIndex(cgImageSource, 0, nil) ?? [:] as CFDictionary
+          let metadata = NSMutableDictionary(dictionary: metadataDict)
+
+          let exifDict = metadata[kCGImagePropertyExifDictionary as String] as? NSMutableDictionary
+
+          // Handle GPS Tags
+          var gpsDict = [String: Any]()
+
+          if let latitude = location["latitude"] as? Double {
+            gpsDict[kCGImagePropertyGPSLatitude as String] = abs(latitude)
+            gpsDict[kCGImagePropertyGPSLatitudeRef as String] = latitude >= 0 ? "N" : "S"
+          }
+
+          if let longitude = location["longitude"] as? Double {
+            gpsDict[kCGImagePropertyGPSLongitude as String] = abs(longitude)
+            gpsDict[kCGImagePropertyGPSLongitudeRef as String] = longitude >= 0 ? "E" : "W"
+          }
+
+          if let positionalAccuracy = location["positional_accuracy"] as? Double {
+            gpsDict[kCGImagePropertyGPSHPositioningError as String] = positionalAccuracy
+          }
+
+          if metadata[kCGImagePropertyGPSDictionary as String] == nil {
+            metadata[kCGImagePropertyGPSDictionary as String] = gpsDict
+          } else {
+            if let metadataGpsDict = metadata[kCGImagePropertyGPSDictionary as String] as? NSMutableDictionary {
+              metadataGpsDict.addEntries(from: gpsDict)
+            }
+          }
+
+          metadata.setObject(NSNumber(value: 1), forKey: kCGImageDestinationLossyCompressionQuality as NSString)
+
+          let destinationData = NSMutableData()
+
+          guard let uiImage = UIImage(contentsOfFile: uri),
+            let sourceType = CGImageSourceGetType(cgImageSource),
+            let destination = CGImageDestinationCreateWithData(destinationData, sourceType, 1, nil) else {
+            reject("Error", "Can't save image", nil)
+            return
+          }
+
+          CGImageDestinationAddImage(destination, uiImage.cgImage!, metadata)
+          CGImageDestinationFinalize(destination)
+
+          resolve(true)
+    }
+
+    func writeLocationForPHAsset(uri: String, location: Dictionary<String, Any>, resolve:@escaping
+        RCTPromiseResolveBlock,reject:@escaping RCTPromiseRejectBlock) -> Void {
         var response:Dictionary<String, Any>?
 
         // Update the PHAsset with the new photo data
-
         let options = PHContentEditingInputRequestOptions()
 
         // Prepare for editing
@@ -216,35 +287,45 @@ class ExifReader: NSObject {
 
     @objc(writeExif:withExifData:withResolver:withRejecter:)
     func writeExif(uri: String, exifData: Dictionary<String, Any>, resolve:@escaping RCTPromiseResolveBlock,reject:@escaping RCTPromiseRejectBlock) -> Void {
-        var response:Dictionary<String, Any>?
+        if uri.starts(with: "ph://") {
+          // Do not work for PHAsset - since this requires making a copy of it, instead of modifying it in-place
+          reject("Error", "Can't write EXIF for a PHAsset", nil)
+          return
+        }
 
-        readRawPHAssetData(uri: uri) { (asset, data) in
-            self.readEXIFFromData(data: data) { dict in
-                var mutatedDict = dict
+        var finalUri = uri
+        if uri.starts(with: "/") {
+          finalUri = "file://\(uri)"
+        }
 
-                mutatedDict[kCGImagePropertyExifDictionary as String] = exifData as [String: Any]
+        readRawDataOfFile(uri: finalUri) { (asset, data) in
+            if let unwrappedData = data {
+              self.readEXIFFromData(data: unwrappedData) { dict in
+                  var mutatedDict = dict
 
-                // Create new photo data with the modified EXIF metadata
-                guard let source = CGImageSourceCreateWithData(data as CFData, nil),
-                      let uniformTypeIdentifier = CGImageSourceGetType(source) else { return }
-                let finalData = NSMutableData(data: data)
-                guard let destination = CGImageDestinationCreateWithData(finalData, uniformTypeIdentifier, 1, nil) else { return }
-                CGImageDestinationAddImageFromSource(destination, source, 0, mutatedDict as CFDictionary)
-                guard CGImageDestinationFinalize(destination) else { return }
+                  mutatedDict[kCGImagePropertyExifDictionary as String] = exifData as [String: Any]
 
-                do {
-                   try PHPhotoLibrary.shared().performChangesAndWait {
-                       let request = PHAssetCreationRequest.forAsset()
-                       request.addResource(with: .photo, data: Data(referencing: finalData), options: nil)
-                       request.creationDate = Date()
-                       // Return URI of newly saved PHAsset
-                       let newImageIdentifier = request.placeholderForCreatedAsset!.localIdentifier
-                       resolve("ph://\(newImageIdentifier)")
-                   }
-                } catch {
-                  reject("Error", "Couldn't save PHAsset", nil)
-                }
+                  // Create new photo data with the modified EXIF metadata
+                  guard let source = CGImageSourceCreateWithData(unwrappedData as CFData, nil),
+                        let uniformTypeIdentifier = CGImageSourceGetType(source) else { return }
+                  let finalData = NSMutableData(data: unwrappedData)
+                  guard let destination = CGImageDestinationCreateWithData(finalData, uniformTypeIdentifier, 1, nil) else { return }
+                  CGImageDestinationAddImageFromSource(destination, source, 0, mutatedDict as CFDictionary)
+                  guard CGImageDestinationFinalize(destination) else { return }
+
+                  do {
+                      if let fileUri = URL(string: finalUri) {
+                         try finalData.write(to: fileUri, options: .atomic)
+                         resolve(finalUri)
+                      }
+                  } catch {
+                    reject("Error", "Couldn't save PHAsset", nil)
+                  }
+              }
+            } else {
+              reject("Error", "Couldn't read image", nil)
             }
+
       }
    }
 
