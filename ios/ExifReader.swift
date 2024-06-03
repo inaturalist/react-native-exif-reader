@@ -91,11 +91,16 @@ class ExifReader: NSObject {
     // Reads raw image data into an EXIF dictionary
     func readEXIFFromData(data: Data, completion:@escaping ([String: Any])->()) {
         var response = Dictionary<String, Any>()
-        if let imageSource = CGImageSourceCreateWithData(data as CFData, nil) {
-            let imageProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil)
-            if let dict = imageProperties as? [String: Any] {
-                completion(dict)
-            }
+        
+        // Attempt to create an image source from the provided data
+        guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil) else {
+            return
+        }
+        
+        // Attempt to copy image properties at index 0
+        if let imageProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any] {
+            // If successful, call completion with the properties dictionary
+            completion(imageProperties)
         }
     }
 
