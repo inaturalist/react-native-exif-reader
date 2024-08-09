@@ -236,7 +236,12 @@ class ExifReader: NSObject {
 
     func writeLocationForPHAsset(uri: String, location: Dictionary<String, Any>, resolve:@escaping
         RCTPromiseResolveBlock,reject:@escaping RCTPromiseRejectBlock) -> Void {
-        var response:Dictionary<String, Any>?
+
+        // If we didn't receive the location, maybe b/c we don't have
+        // permission, just bail
+        if (!location.keys.contains("latitude")) {
+            return;
+        }
 
         // Update the PHAsset with the new photo data
         let options = PHContentEditingInputRequestOptions()
