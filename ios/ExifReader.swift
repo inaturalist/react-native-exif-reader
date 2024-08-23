@@ -91,12 +91,12 @@ class ExifReader: NSObject {
     // Reads raw image data into an EXIF dictionary
     func readEXIFFromData(data: Data, completion:@escaping ([String: Any])->()) {
         var response = Dictionary<String, Any>()
-        
+
         // Attempt to create an image source from the provided data
         guard let imageSource = CGImageSourceCreateWithData(data as CFData, nil) else {
             return
         }
-        
+
         // Attempt to copy image properties at index 0
         if let imageProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [String: Any] {
             // If successful, call completion with the properties dictionary
@@ -249,8 +249,10 @@ class ExifReader: NSObject {
         // Prepare for editing
         readRawPHAssetData(uri: uri) { (asset, data) in
           asset.requestContentEditingInput(with: options, completionHandler: { input, info in
-              guard let input = input
-                  else { fatalError("can't get content editing input: \(info)") }
+              guard let input = input else {
+                  reject("Error", "Can't get content editing input", nil)
+                  return
+              }
 
               // This handler gets called on the main thread; dispatch to a background queue for processing.
               DispatchQueue.global(qos: .userInitiated).async {
@@ -262,6 +264,11 @@ class ExifReader: NSObject {
                   PHPhotoLibrary.shared().performChanges({
                       let request = PHAssetChangeRequest(for: asset)
 
+                      guard let latitude = location["latitude"] as? Double,
+                            let longitude = location["longitude"] as? Double else {
+                          reject("Error", "Invalid latitude or longitude values", nil)
+                          return
+                      }
 
                       let clLocation:CLLocation;
 
