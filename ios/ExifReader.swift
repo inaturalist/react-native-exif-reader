@@ -28,37 +28,14 @@ class ExifReader: NSObject {
                     tzOffset = tzOffsetExif
                 }
 
-                if let tzOffset = tzOffset {
-                    let tzDateFormatter = DateFormatter()
-                    tzDateFormatter.dateFormat = "ZZZZZ"
-
-                    if let tzDate = tzDateFormatter.date(from: tzOffset),
-                       let gmtDate = tzDateFormatter.date(from: "+00:00")
-                    {
-                        var timeDiff: Double = 0
-                        if tzOffset.hasPrefix("-") {
-                            timeDiff = tzDate.timeIntervalSince(gmtDate) * -1
-                        } else {
-                            timeDiff = gmtDate.timeIntervalSince(tzDate)
-                        }
-
-                        if let tz = TimeZone(secondsFromGMT: Int(timeDiff)) {
-                            df.timeZone = tz
-                        }
-                    }
-                }
-
-
                 if let takenDateExif = exif["DateTimeOriginal"] as? String,
                    let takenDate = df.date(from: takenDateExif)
                 {
                     let formatter = DateFormatter()
                     formatter.calendar = Calendar(identifier: .gregorian)
                     formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
-                    if let tz = TimeZone(secondsFromGMT: 0) {
-                        formatter.timeZone = tz
-                    }
                     response["date"] = formatter.string(from:takenDate)
+                    response["timezone_offset"] = tzOffset
                 }
 
                 if let gps = dict["{GPS}"] as? [String: Any] {
