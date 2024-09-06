@@ -270,7 +270,7 @@ PODS:
     - glog
   - react-native-cameraroll (5.0.4):
     - React-Core
-  - react-native-exif-reader (0.3.0):
+  - react-native-exif-reader (0.4.2):
     - React-Core
   - React-perflogger (0.71.16)
   - React-RCTActionSheet (0.71.16):
@@ -493,7 +493,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  boost: a7c83b31436843459a1961bfd74b96033dc77234
+  boost: 7dcd2de282d72e344012f7d6564d024930a6a440
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   FBLazyVector: 9840513ec2766e31fb9e34c2dabb2c4671400fcd
   FBReactNativeSpec: 76141e46f67b395d7d4e94925dfeba0dbd680ba1
@@ -502,7 +502,7 @@ SPEC CHECKSUMS:
   hermes-engine: 2382506846564caf4152c45390dc24f08fce7057
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   Permission-PhotoLibrary: 5b34ca67279f7201ae109cef36f9806a6596002d
-  RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
+  RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 44a3cda52ccac0be738fbf43fef90f3546a48c52
   RCTTypeSafety: da7fbf9826fc898ca8b10dc840f2685562039a64
   React: defd955b6d6ffb9791bb66dee08d90b87a8e2c0c
@@ -517,7 +517,7 @@ SPEC CHECKSUMS:
   React-jsinspector: b3b341764ccda14f3659c00a9bc5b098b334db2b
   React-logger: dc96fadd2f7f6bc38efc3cfb5fef876d4e6290a2
   react-native-cameraroll: 38b40d9033e4077b6c603f92f95c6d05fa7907df
-  react-native-exif-reader: 5d2bb6a43a6b825d1e5859e23d670a3225472a8e
+  react-native-exif-reader: fe4678df00e36e1aba6ade9013fd1d35c78c8381
   React-perflogger: c944b06edad34f5ecded0f29a6e66290a005d365
   React-RCTActionSheet: fa467f37777dacba2c72da4be7ae065da4482d7d
   React-RCTAnimation: 0591ee5f9e3d8c864a0937edea2165fe968e7099
