@@ -105,6 +105,7 @@ export default function App() {
           <Text>Latitude: {result.latitude}</Text>
           <Text>Longitude: {result.longitude}</Text>
           <Text>Positional Accuracy: {result.positional_accuracy}</Text>
+          <Text>Timezone Offset: {result.timezone_offset}</Text>
         </View>
       )}
       <Button
@@ -156,7 +157,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 20,
+    paddingTop: 40,
   },
   box: {
     width: 60,
