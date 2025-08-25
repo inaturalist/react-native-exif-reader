@@ -24,14 +24,14 @@ See https://github.com/inaturalist/iNaturalistReactNative/blob/main/CONTRIBUTING
 ```zsh
 git clone git@github.com:inaturalist/react-native-exif-reader.git
 cd react-native-exif-reader
-npm i
+yarn
 ```
 
 ## Running the example app
 
 ```zsh
 cd example
-npm i
+yarn
 bundle
 (cd ios && pod install)
 npx react-native run-ios
