@@ -19,7 +19,7 @@ const result = await readExif('url');
 
 # Developer setup
 
-See https://github.com/inaturalist/iNaturalistReactNative/blob/main/CONTRIBUTING.md for an overview of best practiceses. You'll need a basic [React Native development environment](https://reactnative.dev/docs/environment-setup).
+See https://github.com/inaturalist/iNaturalistReactNative/blob/main/CONTRIBUTING.md for an overview of best practices. You'll need a basic [React Native development environment](https://reactnative.dev/docs/environment-setup).
 
 ```zsh
 git clone git@github.com:inaturalist/react-native-exif-reader.git
