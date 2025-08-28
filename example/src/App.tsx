@@ -120,18 +120,11 @@ export default function App() {
       <Button
         title="Take photo and set location EXIF"
         onPress={setPhotoLocation}
-        style={{ zIndex: 9999 }}
-      />
-      <Button
-        title="Take photo and set raw EXIF"
-        onPress={setPhotoExif}
-        style={{ zIndex: 9999 }}
-      />
-      <Button
-        title="Show Photos"
         onPress={showImages}
         style={{ zIndex: 9999 }}
       />
+      <Button title="Take photo and set raw EXIF" onPress={setPhotoExif} />
+      <Button title="Show Photos" onPress={showImages} />
       {device && (
         <Camera
           ref={camera}
