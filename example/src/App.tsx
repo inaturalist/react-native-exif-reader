@@ -120,8 +120,6 @@ export default function App() {
       <Button
         title="Take photo and set location EXIF"
         onPress={setPhotoLocation}
-        onPress={showImages}
-        style={{ zIndex: 9999 }}
       />
       <Button title="Take photo and set raw EXIF" onPress={setPhotoExif} />
       <Button title="Show Photos" onPress={showImages} />
