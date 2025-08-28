@@ -18,9 +18,24 @@ import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
 import { useRef, useState, useEffect } from 'react';
 
+type Result = {
+  date: string;
+  latitude: number;
+  longitude: number;
+  positional_accuracy: number;
+  timezone_offset: number;
+};
+
+type Photos = {
+  image: {
+    uri: string;
+  };
+  group_name: string;
+};
+
 export default function App() {
-  const [result, setResult] = useState();
-  const [photos, setPhotos] = useState([]);
+  const [result, setResult] = useState<Result>();
+  const [photos, setPhotos] = useState<Photos[]>([]);
   const devices = useCameraDevices('wide-angle-camera');
   const device = devices.back;
   const camera = useRef<Camera>(null);
@@ -31,7 +46,7 @@ export default function App() {
       : request(PERMISSIONS.IOS.CAMERA);
   }, []);
 
-  const importPhoto = async (photo) => {
+  const importPhoto = async (photo: { image: { uri: string } }) => {
     const imageUri = photo.image.uri;
     console.log('AAA imageUri', imageUri);
 
@@ -40,6 +55,7 @@ export default function App() {
   };
 
   const setPhotoLocation = async () => {
+    if (!camera.current) return;
     const cameraPhoto = await camera.current.takePhoto({ flash: 'off' });
     const imageUri = await CameraRoll.save(cameraPhoto.path, {
       type: 'photo',
@@ -52,6 +68,7 @@ export default function App() {
   };
 
   const setPhotoExif = async () => {
+    if (!camera.current) return;
     const cameraPhoto = await camera.current.takePhoto({ flash: 'off' });
     const imageUri = await CameraRoll.save(cameraPhoto.path, {
       type: 'photo',
@@ -111,18 +128,9 @@ export default function App() {
       <Button
         title="Take photo and set location EXIF"
         onPress={setPhotoLocation}
-        style={{ zIndex: 9999 }}
       />
-      <Button
-        title="Take photo and set raw EXIF"
-        onPress={setPhotoExif}
-        style={{ zIndex: 9999 }}
-      />
-      <Button
-        title="Show Photos"
-        onPress={showImages}
-        style={{ zIndex: 9999 }}
-      />
+      <Button title="Take photo and set raw EXIF" onPress={setPhotoExif} />
+      <Button title="Show Photos" onPress={showImages} />
       {device && (
         <Camera
           ref={camera}
