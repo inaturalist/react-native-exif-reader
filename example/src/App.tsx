@@ -47,6 +47,7 @@ export default function App() {
   };
 
   const setPhotoLocation = async () => {
+    if (!camera.current) return;
     const cameraPhoto = await camera.current.takePhoto({ flash: 'off' });
     const imageUri = await CameraRoll.save(cameraPhoto.path, {
       type: 'photo',
@@ -59,6 +60,7 @@ export default function App() {
   };
 
   const setPhotoExif = async () => {
+    if (!camera.current) return;
     const cameraPhoto = await camera.current.takePhoto({ flash: 'off' });
     const imageUri = await CameraRoll.save(cameraPhoto.path, {
       type: 'photo',
