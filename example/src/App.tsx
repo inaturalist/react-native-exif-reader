@@ -33,7 +33,7 @@ type Photos = {
   group_name: string;
 };
 
-export default function App() {
+export default function App(): React.JSX.Element {
   const [result, setResult] = useState<Result>();
   const [photos, setPhotos] = useState<Photos[]>([]);
   const devices = useCameraDevices('wide-angle-camera');
