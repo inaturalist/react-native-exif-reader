@@ -18,9 +18,16 @@ import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
 import { useRef, useState, useEffect } from 'react';
 
+type Photos = {
+  image: {
+    uri: string;
+  };
+  group_name: string;
+};
+
 export default function App() {
   const [result, setResult] = useState();
-  const [photos, setPhotos] = useState([]);
+  const [photos, setPhotos] = useState<Photos[]>([]);
   const devices = useCameraDevices('wide-angle-camera');
   const device = devices.back;
   const camera = useRef<Camera>(null);
@@ -31,7 +38,7 @@ export default function App() {
       : request(PERMISSIONS.IOS.CAMERA);
   }, []);
 
-  const importPhoto = async (photo) => {
+  const importPhoto = async (photo: { image: { uri: string } }) => {
     const imageUri = photo.image.uri;
     console.log('AAA imageUri', imageUri);
 
