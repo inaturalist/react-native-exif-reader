@@ -15,7 +15,11 @@ import {
 import { readExif, writeExif, writeLocation } from 'react-native-exif-reader';
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
-import { Camera, useCameraDevices } from 'react-native-vision-camera';
+import {
+  Camera,
+  useCameraDevice,
+  useCameraPermission,
+} from 'react-native-vision-camera';
 import { useRef, useState, useEffect } from 'react';
 
 type Result = {
@@ -36,11 +40,13 @@ type Photos = {
 export default function App(): React.JSX.Element {
   const [result, setResult] = useState<Result>();
   const [photos, setPhotos] = useState<Photos[]>([]);
-  const devices = useCameraDevices('wide-angle-camera');
-  const device = devices.back;
+  const device = useCameraDevice('back');
   const camera = useRef<Camera>(null);
 
+  const { hasPermission, requestPermission } = useCameraPermission();
+
   useEffect(() => {
+    requestPermission();
     Platform.OS === 'android'
       ? request(PERMISSIONS.ANDROID.CAMERA)
       : request(PERMISSIONS.IOS.CAMERA);
@@ -131,16 +137,21 @@ export default function App(): React.JSX.Element {
       />
       <Button title="Take photo and set raw EXIF" onPress={setPhotoExif} />
       <Button title="Show Photos" onPress={showImages} />
-      {device && (
+      {device != null && hasPermission ? (
         <Camera
           ref={camera}
-          style={[StyleSheet.absoluteFill, { top: 140 }]}
+          style={{ flex: 1, width: 500 }}
           device={device}
+          photo={true}
           isActive={true}
-          photo
-          orientation={'portrait'}
+          enableZoomGesture
+          pixelFormat={'yuv'}
+          resizeMode="contain"
+          enableFpsGraph={true}
+          photoQualityBalance="quality"
+          outputOrientation="device"
         />
-      )}
+      ) : null}
       <ScrollView style={{ marginTop: 10 }}>
         {photos.map((photo) => (
           <TouchableOpacity
