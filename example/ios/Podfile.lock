@@ -892,6 +892,10 @@ PODS:
     - React-Core
   - react-native-exif-reader (0.4.2):
     - React-Core
+  - react-native-worklets-core (1.3.3):
+    - React
+    - React-callinvoker
+    - React-Core
   - React-nativeconfig (0.73.11)
   - React-NativeModulesApple (0.73.11):
     - glog
@@ -1062,10 +1066,18 @@ PODS:
   - RNPermissions (3.6.1):
     - React-Core
   - SocketRocket (0.6.1)
-  - VisionCamera (2.15.4):
+  - VisionCamera (4.5.2):
+    - VisionCamera/Core (= 4.5.2)
+    - VisionCamera/FrameProcessors (= 4.5.2)
+    - VisionCamera/React (= 4.5.2)
+  - VisionCamera/Core (4.5.2)
+  - VisionCamera/FrameProcessors (4.5.2):
     - React
     - React-callinvoker
+    - react-native-worklets-core
+  - VisionCamera/React (4.5.2):
     - React-Core
+    - VisionCamera/FrameProcessors
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -1102,6 +1114,7 @@ DEPENDENCIES:
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - "react-native-cameraroll (from `../node_modules/@react-native-camera-roll/camera-roll`)"
   - react-native-exif-reader (from `../..`)
+  - react-native-worklets-core (from `../node_modules/react-native-worklets-core`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -1194,6 +1207,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-camera-roll/camera-roll"
   react-native-exif-reader:
     :path: "../.."
+  react-native-worklets-core:
+    :path: "../node_modules/react-native-worklets-core"
   React-nativeconfig:
     :path: "../node_modules/react-native/ReactCommon"
   React-NativeModulesApple:
@@ -1274,6 +1289,7 @@ SPEC CHECKSUMS:
   React-Mapbuffer: 57bf49a458398d329dad2bf8bc660e3e35b96989
   react-native-cameraroll: 6252850a66c54ff7e6e4a60b0e2ddfdd9a472076
   react-native-exif-reader: d871d62023d532e33cc230ede6e2ba9cbfe220e2
+  react-native-worklets-core: f730c01db8ea3d580e322617f4a631206f1905fb
   React-nativeconfig: 8fd29a35a3e4e8c37682d976667663d834ba6165
   React-NativeModulesApple: 83d7077877f8eda8e1b6055b3f8f16f7db8463b5
   React-perflogger: 3887a05940ccd34a83457fd153fdeda509b31737
@@ -1296,7 +1312,7 @@ SPEC CHECKSUMS:
   ReactCommon: 9c38e8797dc2ac72edf63cd18cf450d918575666
   RNPermissions: 8709597abda86902b17f5b547e76be4bde8a306f
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
-  VisionCamera: 098bb64242ff684cd5b5af604178508cb81a9991
+  VisionCamera: 25a205cf335599192d84171d0925d5bd45433608
   Yoga: a813a6d82538ccba91c54406404e3ed80b48a692
 
 PODFILE CHECKSUM: cae0839b4a33c419e105843090897ba0fd02c68d
