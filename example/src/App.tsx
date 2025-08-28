@@ -18,6 +18,14 @@ import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
 import { useRef, useState, useEffect } from 'react';
 
+type Result = {
+  date: string;
+  latitude: number;
+  longitude: number;
+  positional_accuracy: number;
+  timezone_offset: number;
+};
+
 type Photos = {
   image: {
     uri: string;
@@ -26,7 +34,7 @@ type Photos = {
 };
 
 export default function App() {
-  const [result, setResult] = useState();
+  const [result, setResult] = useState<Result>();
   const [photos, setPhotos] = useState<Photos[]>([]);
   const devices = useCameraDevices('wide-angle-camera');
   const device = devices.back;
