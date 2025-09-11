@@ -1243,10 +1243,27 @@ PODS:
     - React-Core
   - react-native-exif-reader (0.4.2):
     - React-Core
-  - react-native-worklets-core (1.3.3):
-    - React
-    - React-callinvoker
+  - react-native-worklets-core (1.5.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
     - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
   - React-nativeconfig (0.75.5)
   - React-NativeModulesApple (0.75.5):
     - glog
@@ -1510,16 +1527,16 @@ PODS:
   - RNPermissions (3.6.1):
     - React-Core
   - SocketRocket (0.7.0)
-  - VisionCamera (4.5.2):
-    - VisionCamera/Core (= 4.5.2)
-    - VisionCamera/FrameProcessors (= 4.5.2)
-    - VisionCamera/React (= 4.5.2)
-  - VisionCamera/Core (4.5.2)
-  - VisionCamera/FrameProcessors (4.5.2):
+  - VisionCamera (4.7.1):
+    - VisionCamera/Core (= 4.7.1)
+    - VisionCamera/FrameProcessors (= 4.7.1)
+    - VisionCamera/React (= 4.7.1)
+  - VisionCamera/Core (4.7.1)
+  - VisionCamera/FrameProcessors (4.7.1):
     - React
     - React-callinvoker
     - react-native-worklets-core
-  - VisionCamera/React (4.5.2):
+  - VisionCamera/React (4.7.1):
     - React-Core
     - VisionCamera/FrameProcessors
   - Yoga (0.0.0)
@@ -1778,7 +1795,7 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: 9856dcf1c3d981843197b1b75253a079d961795d
   react-native-cameraroll: 6252850a66c54ff7e6e4a60b0e2ddfdd9a472076
   react-native-exif-reader: d871d62023d532e33cc230ede6e2ba9cbfe220e2
-  react-native-worklets-core: f730c01db8ea3d580e322617f4a631206f1905fb
+  react-native-worklets-core: a7fb4fee321f4af49820f92bf6252b5fe9c41a74
   React-nativeconfig: 237c862aab56a7426301fcbbb8dd6988745231e0
   React-NativeModulesApple: 5b3c2bcfa3a53b22da441b35189e902ede27513d
   React-perflogger: 46ce3b295add69087b7c5ff325b55a6c7af204fc
@@ -1807,7 +1824,7 @@ SPEC CHECKSUMS:
   ReactCommon: ee80ae3d276a9f1daa059169405b97c600dcba45
   RNPermissions: 8709597abda86902b17f5b547e76be4bde8a306f
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
-  VisionCamera: 25a205cf335599192d84171d0925d5bd45433608
+  VisionCamera: 7e17e56cca70c88d6fdcae0257f7c0bcc54c8b2f
   Yoga: 1dd9dabb9df8fe08f12cd522eae04a2da0e252eb
 
 PODFILE CHECKSUM: 34bf760f7f221af8e30a4f9da7e6b84fca07ee38
