@@ -25,16 +25,8 @@ import {
 } from 'react-native-vision-camera';
 import { useRef, useState, useEffect } from 'react';
 
-type Result = {
-  date: string;
-  latitude: number;
-  longitude: number;
-  positional_accuracy: number;
-  timezone_offset: number;
-};
-
 export default function App(): React.JSX.Element {
-  const [result, setResult] = useState<Result>();
+  const [result, setResult] = useState<Record<string, any>>();
   const device = useCameraDevice('back');
   const camera = useRef<Camera>(null);
 
