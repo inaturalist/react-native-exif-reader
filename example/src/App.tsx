@@ -39,7 +39,7 @@ export default function App(): React.JSX.Element {
     Platform.OS === 'android'
       ? request(PERMISSIONS.ANDROID.CAMERA)
       : request(PERMISSIONS.IOS.CAMERA);
-  }, []);
+  }, [requestPermission]);
 
   const importPhoto = async (photo: { image: { uri: string } }) => {
     const imageUri = photo.image.uri;
