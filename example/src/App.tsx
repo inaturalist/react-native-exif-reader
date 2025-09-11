@@ -13,7 +13,10 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 import { readExif, writeExif, writeLocation } from 'react-native-exif-reader';
-import { useCameraRoll } from '@react-native-camera-roll/camera-roll';
+import {
+  CameraRoll,
+  useCameraRoll,
+} from '@react-native-camera-roll/camera-roll';
 import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 import {
   Camera,
@@ -37,7 +40,7 @@ export default function App(): React.JSX.Element {
 
   const { hasPermission, requestPermission } = useCameraPermission();
 
-  const [photos, getPhotos, save] = useCameraRoll();
+  const [photos, getPhotos] = useCameraRoll();
 
   useEffect(() => {
     requestPermission();
@@ -57,7 +60,7 @@ export default function App(): React.JSX.Element {
   const setPhotoLocation = async () => {
     if (!camera.current) return;
     const cameraPhoto = await camera.current.takePhoto({ flash: 'off' });
-    const imageUri = await save(cameraPhoto.path, {
+    const imageUri = await CameraRoll.save(cameraPhoto.path, {
       type: 'photo',
       album: 'Camera',
     });
@@ -70,7 +73,7 @@ export default function App(): React.JSX.Element {
   const setPhotoExif = async () => {
     if (!camera.current) return;
     const cameraPhoto = await camera.current.takePhoto({ flash: 'off' });
-    const imageUri = await save(cameraPhoto.path, {
+    const imageUri = await CameraRoll.save(cameraPhoto.path, {
       type: 'photo',
       album: 'Camera',
     });
