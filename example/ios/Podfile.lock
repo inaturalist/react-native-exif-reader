@@ -1567,7 +1567,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNPermissions (4.1.5):
+  - RNPermissions (5.4.2):
     - React-Core
   - SocketRocket (0.7.1)
   - VisionCamera (4.7.2):
@@ -1867,11 +1867,11 @@ SPEC CHECKSUMS:
   ReactCodegen: 208bce6d59af415a05645e698c05099c712b7c9e
   ReactCommon: f8ba2c1fc9562f77a16d44fb96fad96aa3eac847
   ReactNativeExifReader: f661b4523e014ef5da5968d29d313111f204425f
-  RNPermissions: 0f14e66c75fd31900215d67955e2a71f2436304e
+  RNPermissions: df3334efda132360a63a1a798ac33523bc388840
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   VisionCamera: 30b358b807324c692064f78385e9a732ce1bebfe
   Yoga: eca8dd841b7cd47d82d66be58af8e3aeb819012f
 
-PODFILE CHECKSUM: 8e354aa3102994275d403b0d1881a889ccd94251
+PODFILE CHECKSUM: dea846e1c13c933630a094c6bfbfeeced63fe37a
 
 COCOAPODS: 1.16.2

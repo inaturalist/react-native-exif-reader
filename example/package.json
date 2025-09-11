@@ -13,7 +13,7 @@
     "@react-native-camera-roll/camera-roll": "7.10.2",
     "react": "19.0.0",
     "react-native": "0.78.3",
-    "react-native-permissions": "4.1.5",
+    "react-native-permissions": "5.4.2",
     "react-native-vision-camera": "4.7.2"
   },
   "devDependencies": {
