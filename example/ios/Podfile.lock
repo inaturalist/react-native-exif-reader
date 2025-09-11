@@ -8,8 +8,6 @@ PODS:
   - hermes-engine (0.78.3):
     - hermes-engine/Pre-built (= 0.78.3)
   - hermes-engine/Pre-built (0.78.3)
-  - Permission-PhotoLibrary (3.6.1):
-    - RNPermissions
   - RCT-Folly (2024.11.18.00):
     - boost
     - DoubleConversion
@@ -1569,7 +1567,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNPermissions (3.6.1):
+  - RNPermissions (4.1.5):
     - React-Core
   - SocketRocket (0.7.1)
   - VisionCamera (4.7.2):
@@ -1588,7 +1586,6 @@ DEPENDENCIES:
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
-  - Permission-PhotoLibrary (from `../node_modules/react-native-permissions/ios/PhotoLibrary`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCT-Folly/Fabric (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTDeprecation (from `../node_modules/react-native/ReactApple/Libraries/RCTFoundation/RCTDeprecation`)
@@ -1675,8 +1672,6 @@ EXTERNAL SOURCES:
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
     :tag: hermes-2025-01-13-RNv0.78.0-a942ef374897d85da38e9c8904574f8376555388
-  Permission-PhotoLibrary:
-    :path: "../node_modules/react-native-permissions/ios/PhotoLibrary"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTDeprecation:
@@ -1812,7 +1807,6 @@ SPEC CHECKSUMS:
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: eb93e2f488219332457c3c4eafd2738ddc7e80b8
   hermes-engine: b5c9cfbe6415f1b0b24759f2942c8f33e9af6347
-  Permission-PhotoLibrary: e3709d7e2b89fa0bbe1c38022ec6a2cf350a84ff
   RCT-Folly: e78785aa9ba2ed998ea4151e314036f6c49e6d82
   RCTDeprecation: cf39863b43871c2031050605fb884019b6193910
   RCTRequired: 8fdd66f4a97f352b66f38cfef13fc11b12d2c884
@@ -1873,11 +1867,11 @@ SPEC CHECKSUMS:
   ReactCodegen: 208bce6d59af415a05645e698c05099c712b7c9e
   ReactCommon: f8ba2c1fc9562f77a16d44fb96fad96aa3eac847
   ReactNativeExifReader: f661b4523e014ef5da5968d29d313111f204425f
-  RNPermissions: 8709597abda86902b17f5b547e76be4bde8a306f
+  RNPermissions: 0f14e66c75fd31900215d67955e2a71f2436304e
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   VisionCamera: 30b358b807324c692064f78385e9a732ce1bebfe
   Yoga: eca8dd841b7cd47d82d66be58af8e3aeb819012f
 
-PODFILE CHECKSUM: 437bf8c23f7b08cecbc8ef48c8d2cecff18dc6c8
+PODFILE CHECKSUM: 8e354aa3102994275d403b0d1881a889ccd94251
 
 COCOAPODS: 1.16.2
