@@ -13,7 +13,7 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 import { readExif, writeExif, writeLocation } from 'react-native-exif-reader';
-import { CameraRoll } from '@react-native-camera-roll/camera-roll';
+import { useCameraRoll } from '@react-native-camera-roll/camera-roll';
 import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 import {
   Camera,
@@ -30,20 +30,14 @@ type Result = {
   timezone_offset: number;
 };
 
-type Photos = {
-  image: {
-    uri: string;
-  };
-  group_name: string;
-};
-
 export default function App(): React.JSX.Element {
   const [result, setResult] = useState<Result>();
-  const [photos, setPhotos] = useState<Photos[]>([]);
   const device = useCameraDevice('back');
   const camera = useRef<Camera>(null);
 
   const { hasPermission, requestPermission } = useCameraPermission();
+
+  const [photos, getPhotos, save] = useCameraRoll();
 
   useEffect(() => {
     requestPermission();
@@ -63,7 +57,7 @@ export default function App(): React.JSX.Element {
   const setPhotoLocation = async () => {
     if (!camera.current) return;
     const cameraPhoto = await camera.current.takePhoto({ flash: 'off' });
-    const imageUri = await CameraRoll.save(cameraPhoto.path, {
+    const imageUri = await save(cameraPhoto.path, {
       type: 'photo',
       album: 'Camera',
     });
@@ -76,7 +70,7 @@ export default function App(): React.JSX.Element {
   const setPhotoExif = async () => {
     if (!camera.current) return;
     const cameraPhoto = await camera.current.takePhoto({ flash: 'off' });
-    const imageUri = await CameraRoll.save(cameraPhoto.path, {
+    const imageUri = await save(cameraPhoto.path, {
       type: 'photo',
       album: 'Camera',
     });
@@ -110,13 +104,11 @@ export default function App(): React.JSX.Element {
       await PermissionsAndroid.request(PERMISSIONS.ANDROID.CAMERA);
     }
 
-    const p = await CameraRoll.getPhotos({
+    await getPhotos({
       first: 30,
       groupTypes: 'All',
       assetType: 'Photos',
     });
-
-    setPhotos(p.edges.map((x) => x.node));
   };
 
   return (
@@ -153,15 +145,15 @@ export default function App(): React.JSX.Element {
         />
       ) : null}
       <ScrollView style={{ marginTop: 10 }}>
-        {photos.map((photo) => (
+        {photos.edges.map((photo) => (
           <TouchableOpacity
-            key={photo.image.uri}
-            onPress={() => importPhoto(photo)}
+            key={photo.node.image.uri}
+            onPress={() => importPhoto(photo.node)}
             style={{ paddingBottom: 20 }}
           >
-            <Text>{photo.group_name}:</Text>
+            <Text>{photo.node.group_name}:</Text>
             <Image
-              source={{ uri: photo.image.uri }}
+              source={{ uri: photo.node.image.uri }}
               style={{ height: 100, width: 100 }}
             />
           </TouchableOpacity>
