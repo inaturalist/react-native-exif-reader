@@ -1244,27 +1244,6 @@ PODS:
     - React-Core
   - react-native-exif-reader (0.4.2):
     - React-Core
-  - react-native-worklets-core (1.5.0):
-    - DoubleConversion
-    - glog
-    - hermes-engine
-    - RCT-Folly (= 2024.11.18.00)
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - Yoga
   - React-NativeModulesApple (0.78.3):
     - glog
     - hermes-engine
@@ -1557,16 +1536,10 @@ PODS:
   - SocketRocket (0.7.1)
   - VisionCamera (4.7.1):
     - VisionCamera/Core (= 4.7.1)
-    - VisionCamera/FrameProcessors (= 4.7.1)
     - VisionCamera/React (= 4.7.1)
   - VisionCamera/Core (4.7.1)
-  - VisionCamera/FrameProcessors (4.7.1):
-    - React
-    - React-callinvoker
-    - react-native-worklets-core
   - VisionCamera/React (4.7.1):
     - React-Core
-    - VisionCamera/FrameProcessors
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -1612,7 +1585,6 @@ DEPENDENCIES:
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - "react-native-cameraroll (from `../node_modules/@react-native-camera-roll/camera-roll`)"
   - react-native-exif-reader (from `../..`)
-  - react-native-worklets-core (from `../node_modules/react-native-worklets-core`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-performancetimeline (from `../node_modules/react-native/ReactCommon/react/performance/timeline`)
@@ -1731,8 +1703,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-camera-roll/camera-roll"
   react-native-exif-reader:
     :path: "../.."
-  react-native-worklets-core:
-    :path: "../node_modules/react-native-worklets-core"
   React-NativeModulesApple:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios"
   React-perflogger:
@@ -1837,7 +1807,6 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: b902bf1dc40aa577bb8e00e2ec897853fbc82ca4
   react-native-cameraroll: 6252850a66c54ff7e6e4a60b0e2ddfdd9a472076
   react-native-exif-reader: d871d62023d532e33cc230ede6e2ba9cbfe220e2
-  react-native-worklets-core: 5281a88dd187663e9d3cd58e54ab5c99e29d671a
   React-NativeModulesApple: c8bb2bc56d39bd122c56ef58a55c3f34d53f1585
   React-perflogger: d06f0fd0727356651a5535f6d717130187aeb667
   React-performancetimeline: 7afc2307ffc4047cef95eb711ea39a12fd90d533
@@ -1868,7 +1837,7 @@ SPEC CHECKSUMS:
   ReactCommon: f8ba2c1fc9562f77a16d44fb96fad96aa3eac847
   RNPermissions: 8709597abda86902b17f5b547e76be4bde8a306f
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
-  VisionCamera: 7e17e56cca70c88d6fdcae0257f7c0bcc54c8b2f
+  VisionCamera: 9a8f98ae344fe5d148f84bb45829f9e4caab9d2f
   Yoga: eca8dd841b7cd47d82d66be58af8e3aeb819012f
 
 PODFILE CHECKSUM: 437bf8c23f7b08cecbc8ef48c8d2cecff18dc6c8
