@@ -32,12 +32,18 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>${PRODUCT_NAME} uses the camera to add photos to your observations of nature.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Export and import ${PRODUCT_NAME} photos to and from your library.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Export and import ${PRODUCT_NAME} photos to and from your library.</string>
+	<key>RCTNewArchEnabled</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
-  <key>NSPhotoLibraryUsageDescription</key>
- 	<string>Export and import ${PRODUCT_NAME} photos to and from your library.</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>arm64</string>
@@ -50,9 +56,5 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSCameraUsageDescription</key>
- 	<string>${PRODUCT_NAME} uses the camera to add photos to your observations of nature.</string>
-  <key>NSPhotoLibraryAddUsageDescription</key>
-  <string>Export and import ${PRODUCT_NAME} photos to and from your library.</string>
 </dict>
 </plist>
