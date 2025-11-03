@@ -1,5 +1,4 @@
 package com.reactnativeexifreader;
-import java.util.Map;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import androidx.annotation.NonNull;
@@ -30,7 +29,6 @@ import android.net.Uri;
 import java.util.Locale;
 import java.text.DateFormat;
 import java.io.FileDescriptor;
-import androidx.exifinterface.media.ExifInterface;
 import android.location.Location;
 
 @ReactModule(name = ExifReaderModule.NAME)
