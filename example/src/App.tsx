@@ -162,6 +162,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 40,
+    backgroundColor: '#ffffff',
   },
   box: {
     width: 60,
