@@ -86,14 +86,12 @@ export default function App(): React.JSX.Element {
 
     let permissionResult = await request(permission);
 
-    if (permissionResult !== RESULTS.GRANTED) return;
-
     if (Platform.OS === 'android' && Platform.Version >= 29) {
       permissionResult = await request(
         PERMISSIONS.ANDROID.ACCESS_MEDIA_LOCATION
       );
-      if (permissionResult !== RESULTS.GRANTED) return;
     }
+    if (permissionResult !== RESULTS.GRANTED) return;
 
     if (Platform.OS === 'android') {
       await PermissionsAndroid.request(PERMISSIONS.ANDROID.CAMERA);
