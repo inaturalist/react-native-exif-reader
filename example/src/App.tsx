@@ -106,6 +106,21 @@ export default function App(): React.JSX.Element {
 
   return (
     <View style={styles.container}>
+      {device != null && hasPermission ? (
+        <Camera
+          ref={camera}
+          style={{ flex: 1, width: 500 }}
+          device={device}
+          photo={true}
+          isActive={true}
+          enableZoomGesture
+          pixelFormat={'yuv'}
+          resizeMode="contain"
+          enableFpsGraph={true}
+          photoQualityBalance="quality"
+          outputOrientation="device"
+        />
+      ) : null}
       {result && (
         <View style={{ marginBottom: 20, marginTop: 10 }}>
           <Text>Result:</Text>
@@ -122,21 +137,6 @@ export default function App(): React.JSX.Element {
       />
       <Button title="Take photo and set raw EXIF" onPress={setPhotoExif} />
       <Button title="Show Photos" onPress={showImages} />
-      {device != null && hasPermission ? (
-        <Camera
-          ref={camera}
-          style={{ flex: 1, width: 500 }}
-          device={device}
-          photo={true}
-          isActive={true}
-          enableZoomGesture
-          pixelFormat={'yuv'}
-          resizeMode="contain"
-          enableFpsGraph={true}
-          photoQualityBalance="quality"
-          outputOrientation="device"
-        />
-      ) : null}
       <ScrollView style={{ marginTop: 10 }}>
         {photos.edges.map((photo) => (
           <TouchableOpacity
