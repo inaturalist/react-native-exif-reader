@@ -128,7 +128,7 @@ dependencies {
   implementation "com.facebook.react:react-native:+"
   implementation 'androidx.exifinterface:exifinterface:1.1.0'
   implementation 'it.sephiroth.android.exif:library:+'
-  implementation 'com.github.drewnoakes:metadata-extractor:321551df00'
+  implementation 'com.github.drewnoakes:metadata-extractor:2.19.0'
 // From node_modules
 }
 
